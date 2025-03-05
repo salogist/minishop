@@ -6,74 +6,52 @@ const orderSchema = new mongoose.Schema({
     required: true,
     ref: 'User'
   },
-  orderItems: [
-    {
-      name: { type: String, required: true },
-      qty: { type: Number, required: true },
-      image: { type: String, required: true },
-      price: { type: Number, required: true },
-      color: { type: String },
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product'
-      }
-    }
-  ],
+  items: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Product'
+    },
+    quantity: {
+      type: Number,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+  }],
   shippingAddress: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    postalCode: { type: String, required: true }
+    address: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    postalCode: {
+      type: String,
+      required: true
+    },
+    country: {
+      type: String,
+      required: true
+    },
   },
   paymentMethod: {
     type: String,
-    required: true,
-    enum: ['online', 'cash_on_delivery']
-  },
-  paymentResult: {
-    id: String,
-    status: String,
-    update_time: String,
-    email_address: String
-  },
-  itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0.0
-  },
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0.0
+    required: true
   },
   totalPrice: {
     type: Number,
-    required: true,
-    default: 0.0
-  },
-  isPaid: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  paidAt: {
-    type: Date
-  },
-  isDelivered: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  deliveredAt: {
-    type: Date
+    required: true
   },
   status: {
     type: String,
-    required: true,
     enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
     default: 'pending'
-  }
+  },
 }, {
   timestamps: true
 });

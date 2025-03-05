@@ -182,7 +182,3 @@ npm run build
 3. Commit تغییرات (`git commit -m 'Add some AmazingFeature'`)
 4. Push به Branch (`git push origin feature/AmazingFeature`)
 5. باز کردن Pull Request
-
-## لایسنس
-
-این پروژه تحت لایسنس MIT منتشر شده است. برای اطلاعات بیشتر به فایل [LICENSE](LICENSE) مراجعه کنید. 

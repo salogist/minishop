@@ -5,6 +5,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { RootState } from '../store';
 import { clearUser } from '../store/slices/authSlice';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navigation = [
   { name: 'صفحه اصلی', href: '/' },
@@ -27,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-50 bg-white shadow">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -146,7 +147,6 @@ const Navbar = () => {
                 )}
               </div>
               <div className="-ml-2 flex items-center sm:hidden">
-                {/* Mobile menu button */}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
                   <span className="sr-only">باز کردن منوی اصلی</span>
                   {open ? (
@@ -159,79 +159,111 @@ const Navbar = () => {
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as={Link}
-                  to={item.href}
-                  className="block border-r-4 border-transparent py-2 pr-3 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-            <div className="border-t border-gray-200 pb-3 pt-4">
-              {user ? (
-                <>
-                  <div className="flex items-center px-4">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={user.avatar || 'https://www.gravatar.com/avatar/?d=mp'}
-                        alt=""
-                      />
-                    </div>
-                    <div className="mr-3">
-                      <div className="text-base font-medium text-gray-800">{user.name}</div>
-                      <div className="text-sm font-medium text-gray-500">{user.email}</div>
-                    </div>
-                  </div>
-                  <div className="mt-3 space-y-1">
-                    <Disclosure.Button
-                      as={Link}
-                      to="/profile"
-                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                    >
-                      پروفایل
-                    </Disclosure.Button>
-                    <Disclosure.Button
-                      as={Link}
-                      to="/orders"
-                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                    >
-                      سفارش‌ها
-                    </Disclosure.Button>
-                    <Disclosure.Button
-                      as="button"
-                      onClick={handleLogout}
-                      className="block w-full text-right px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                    >
-                      خروج
-                    </Disclosure.Button>
-                  </div>
-                </>
-              ) : (
-                <div className="mt-3 space-y-1">
-                  <Disclosure.Button
-                    as={Link}
-                    to="/login"
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                  >
-                    ورود
-                  </Disclosure.Button>
-                  <Disclosure.Button
-                    as={Link}
-                    to="/register"
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                  >
-                    ثبت نام
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-40 bg-black bg-opacity-50 sm:hidden"
+                onClick={() => open && false}
+              />
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+                className="fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-white shadow-xl sm:hidden"
+              >
+                <div className="flex h-16 items-center justify-between px-4">
+                  <h2 className="text-lg font-medium text-gray-900">منو</h2>
+                  <Disclosure.Button className="rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+                    <span className="sr-only">بستن منو</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Disclosure.Button>
                 </div>
-              )}
-            </div>
-          </Disclosure.Panel>
+                <div className="mt-5 px-2">
+                  <div className="space-y-1">
+                    {navigation.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as={Link}
+                        to={item.href}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
+                  </div>
+                  <div className="mt-4 border-t border-gray-200 pt-4">
+                    {user ? (
+                      <>
+                        <div className="flex items-center px-3">
+                          <div className="flex-shrink-0">
+                            <img
+                              className="h-10 w-10 rounded-full"
+                              src={user.avatar || 'https://www.gravatar.com/avatar/?d=mp'}
+                              alt=""
+                            />
+                          </div>
+                          <div className="mr-3">
+                            <div className="text-base font-medium text-gray-800">{user.name}</div>
+                            <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                          </div>
+                        </div>
+                        <div className="mt-3 space-y-1">
+                          <Disclosure.Button
+                            as={Link}
+                            to="/profile"
+                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            پروفایل
+                          </Disclosure.Button>
+                          <Disclosure.Button
+                            as={Link}
+                            to="/orders"
+                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            سفارش‌ها
+                          </Disclosure.Button>
+                          <Disclosure.Button
+                            as="button"
+                            onClick={handleLogout}
+                            className="block w-full text-right rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            خروج
+                          </Disclosure.Button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="mt-3 space-y-1">
+                        <Disclosure.Button
+                          as={Link}
+                          to="/login"
+                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          ورود
+                        </Disclosure.Button>
+                        <Disclosure.Button
+                          as={Link}
+                          to="/register"
+                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          ثبت نام
+                        </Disclosure.Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </Disclosure>

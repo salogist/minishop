@@ -5,15 +5,17 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   blur?: boolean;
   sizes?: string;
   priority?: boolean;
+  quality?: number;
 }
 
 const Image: React.FC<ImageProps> = ({ 
   src, 
   alt, 
   fallback = '/images/placeholder.png', 
-  blur = true,
+  blur = false,
   sizes = '100vw',
   priority = false,
+  quality = 75,
   className = '',
   ...props 
 }) => {
@@ -71,7 +73,7 @@ const Image: React.FC<ImageProps> = ({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        <div className="absolute inset-0 bg-gray-100 animate-pulse" />
       )}
       <img
         ref={imageRef}
@@ -81,7 +83,7 @@ const Image: React.FC<ImageProps> = ({
         onLoad={handleLoad}
         loading={priority ? 'eager' : 'lazy'}
         sizes={sizes}
-        className={`transition-opacity duration-300 ${
+        className={`w-full h-full object-cover transition-opacity duration-300 ${
           isLoading ? 'opacity-0' : 'opacity-100'
         } ${blur ? 'blur-sm' : ''}`}
         {...props}

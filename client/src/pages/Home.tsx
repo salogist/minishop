@@ -5,6 +5,8 @@ import { RootState } from '../store';
 import { setProducts, setLoading, setError } from '../store/slices/productSlice';
 import { Product } from '../types/product';
 import PageTransition from '../components/PageTransition';
+import AnimatedSection from '../components/AnimatedSection';
+import SEO from '../components/SEO';
 import { motion } from 'framer-motion';
 import {
   ShieldCheckIcon,
@@ -13,8 +15,6 @@ import {
   PhoneIcon,
 } from '@heroicons/react/24/outline';
 import Image from '../components/Image';
-import ProductCarousel from '../components/ProductCarousel';
-
 const categories = [
   {
     id: 1,
@@ -281,182 +281,170 @@ const Home = () => {
 
   return (
     <PageTransition>
+      <SEO
+        title="صفحه اصلی"
+        description="فروشگاه آنلاین موبایل - خرید انواع گوشی موبایل با بهترین قیمت و ضمانت اصالت"
+        keywords="موبایل, گوشی موبایل, فروشگاه موبایل, اپل, سامسونگ, شیائومی, هواوی"
+      />
+
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-right">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block">جدیدترین گوشی‌های</span>
-                  <span className="block text-indigo-600">موبایل</span>
-                </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  با ما از آخرین تکنولوژی‌های دنیای موبایل مطلع شوید و بهترین محصولات را با قیمت مناسب خریداری کنید.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-end">
-                  <div className="rounded-md shadow">
-                    <Link
-                      to="/products"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                    >
-                      مشاهده محصولات
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div>
-        <div className="lg:absolute lg:inset-y-0 lg:h-full lg:w-1/2">
+      <section className="relative h-[400px] sm:h-[500px] md:h-[600px] overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0"
+        >
           <Image
-            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full rounded-2xl"
             src="/images/main/iPhone-16-E-Feature-1.jpg"
-            alt="iPhone 16 Pro"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt="Hero Background"
+            className="w-full h-full object-cover"
             priority
+            sizes="100vw"
+            quality={90}
           />
-        </div>
-      </div>
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <AnimatedSection direction="up" delay={0.2}>
+              <div className="text-center text-white px-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">فروشگاه موبایل</h1>
+                <p className="text-lg sm:text-xl mb-8">بهترین محصولات با بهترین قیمت</p>
+                <Link
+                  to="/products"
+                  className="inline-block bg-white text-black px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-gray-100 transition-colors text-sm sm:text-base"
+                >
+                  مشاهده محصولات
+                </Link>
+              </div>
+            </AnimatedSection>
+          </div>
+        </motion.div>
+      </section>
 
       {/* Features Section */}
-      <div className="bg-white py-24">
+      <section className="bg-white py-12 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => (
-              <motion.div
+              <AnimatedSection
                 key={feature.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                delay={index * 0.1}
+                direction="up"
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative p-6">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-primary-500 text-white mb-4">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
+                <div className="relative p-4 sm:p-6">
+                  <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-primary-500 text-white mb-3 sm:mb-4">
+                    <feature.icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.name}</h3>
-                  <p className="text-base text-gray-600">{feature.description}</p>
+                  <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">{feature.name}</h2>
+                  <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
                 </div>
-              </motion.div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Categories Section */}
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">
-              دسته‌بندی محصولات
-            </h2>
-            <p className="text-lg text-gray-600">
-              محصولات مورد نظر خود را در دسته‌بندی‌های مختلف پیدا کنید
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="py-12 sm:py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <AnimatedSection direction="up" delay={0.2}>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">دسته‌بندی محصولات</h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {categories.map((category, index) => (
-              <motion.div
+              <AnimatedSection
                 key={category.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                delay={index * 0.1}
+                direction="up"
+                className="group relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-lg"
               >
-                <Link to={category.href} className="group block">
-                  <div className="relative overflow-hidden rounded-2xl">
-                    <div className="aspect-w-16 aspect-h-9">
-                      <Image
-                        src={category.image}
-                        alt={category.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="text-xl font-semibold text-white">{category.name}</h3>
-                    </div>
+                <Link to={`/products?category=${category.id}`}>
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    quality={80}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <h3 className="text-lg sm:text-xl font-bold p-3 sm:p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      {category.name}
+                    </h3>
                   </div>
                 </Link>
-              </motion.div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Featured Products Section */}
-      <div className="bg-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-2">
-              محصولات ویژه
-            </h2>
-            <p className="text-lg text-gray-600">
-              جدیدترین و محبوب‌ترین محصولات ما را ببینید
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-gray-50 py-12 sm:py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <AnimatedSection direction="up" delay={0.2}>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">محصولات ویژه</h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {sampleProducts.map((product, index) => (
-              <motion.div
+              <AnimatedSection
                 key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                delay={index * 0.1}
+                direction="up"
+                className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <Link to={`/products/${product.id}`} className="group block h-full">
-                  <div className="relative overflow-hidden rounded-lg bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 h-full">
-                    <div className="aspect-w-1 aspect-h-1">
-                      <Image
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>
-                      <p className="mt-1 text-sm text-gray-500">{product.brand}</p>
-                      <div className="mt-2 flex items-center justify-between">
-                        <p className="text-lg font-medium text-gray-900">
-                          {product.price.toLocaleString()} تومان
-                        </p>
-                        <div className="flex items-center">
-                          <span className="text-yellow-400">★</span>
-                          <span className="ml-1 text-sm text-gray-500">{product.rating}</span>
-                        </div>
-                      </div>
+                <Link to={`/products/${product.id}`}>
+                  <div className="relative h-48 sm:h-56 lg:h-64">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-full object-contain p-4"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      quality={85}
+                    />
+                  </div>
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base sm:text-lg font-bold text-blue-600">
+                        {product.price.toLocaleString()} تومان
+                      </span>
+                      <span className="text-xs sm:text-sm text-gray-500">
+                        {product.stock > 0 ? 'موجود' : 'ناموجود'}
+                      </span>
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* CTA Section */}
-      <div className="bg-primary-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl mb-8">
-              آماده خرید هستید؟
-            </h2>
-            <p className="text-lg text-primary-100 mb-8 max-w-2xl mx-auto">
-              با ثبت نام در فروشگاه ما، از مزایای ویژه‌ای مانند تخفیف‌های ویژه، ارسال رایگان و پشتیبانی ۲۴/۷ بهره‌مند شوید.
-            </p>
-            <Link
-              to="/register"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl text-primary-600 bg-white hover:bg-primary-50 transition-colors duration-300"
-            >
-              ثبت نام کنید
-            </Link>
-          </div>
+      <section className="bg-primary-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+          <AnimatedSection direction="up" delay={0.2}>
+            <div className="text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-4 sm:mb-8">
+                آماده خرید هستید؟
+              </h2>
+              <p className="text-base sm:text-lg text-primary-100 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                با ثبت نام در فروشگاه ما، از مزایای ویژه‌ای مانند تخفیف‌های ویژه، ارسال رایگان و پشتیبانی ۲۴/۷ بهره‌مند شوید.
+              </p>
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-2 sm:py-3 border border-transparent text-sm sm:text-base font-medium rounded-xl text-primary-600 bg-white hover:bg-primary-50 transition-colors duration-300"
+              >
+                ثبت نام کنید
+              </Link>
+            </div>
+          </AnimatedSection>
         </div>
-      </div>
+      </section>
     </PageTransition>
   );
 };
