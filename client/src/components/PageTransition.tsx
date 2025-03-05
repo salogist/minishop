@@ -1,24 +1,29 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface PageTransitionProps {
   children: ReactNode;
 }
 
-const PageTransition = ({ children }: PageTransitionProps) => {
+const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
+  const location = useLocation();
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{
-        duration: 0.5,
-        ease: [0.43, 0.13, 0.23, 0.96],
-        y: { duration: 0.6 }
-      }}
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

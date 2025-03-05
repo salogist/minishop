@@ -4,25 +4,25 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'نام کاربر الزامی است'],
-    trim: true
+    required: true,
   },
   email: {
     type: String,
-    required: [true, 'ایمیل الزامی است'],
+    required: true,
     unique: true,
-    lowercase: true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'لطفا یک ایمیل معتبر وارد کنید']
   },
   password: {
     type: String,
-    required: [true, 'رمز عبور الزامی است'],
-    minlength: [6, 'رمز عبور باید حداقل 6 کاراکتر باشد']
+    required: true,
+  },
+  avatar: {
+    type: String,
+    default: '/images/default-avatar.png',
   },
   role: {
     type: String,
     enum: ['user', 'admin'],
-    default: 'user'
+    default: 'user',
   },
   phoneNumber: {
     type: String,
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     postalCode: String
   }
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 // Hash password before saving
