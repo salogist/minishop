@@ -282,52 +282,40 @@ const Home = () => {
   return (
     <PageTransition>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center lg:text-right"
-            >
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-6">
-                <span className="block">جدیدترین گوشی‌های</span>
-                <span className="block text-primary-600">موبایل</span>
-              </h1>
-              <p className="text-lg leading-8 text-gray-700 mb-8">
-                با ما به‌روزترین محصولات را با بهترین قیمت خریداری کنید. ضمانت اصالت کالا و پشتیبانی ۲۴/۷
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link
-                  to="/products"
-                  className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-300"
-                >
-                  مشاهده محصولات
-                </Link>
-                <Link
-                  to="/about"
-                  className="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-300"
-                >
-                  درباره ما
-                </Link>
+      <div className="relative overflow-hidden bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+              <div className="sm:text-center lg:text-right">
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                  <span className="block">جدیدترین گوشی‌های</span>
+                  <span className="block text-indigo-600">موبایل</span>
+                </h1>
+                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  با ما از آخرین تکنولوژی‌های دنیای موبایل مطلع شوید و بهترین محصولات را با قیمت مناسب خریداری کنید.
+                </p>
+                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-end">
+                  <div className="rounded-md shadow">
+                    <Link
+                      to="/products"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                    >
+                      مشاهده محصولات
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-primary-600/20 rounded-3xl"></div>
-              <Image
-                src="/images/main/iPhone-16-E-Feature-1.jpg"
-                alt="iPhone 16"
-                className="w-full h-full object-cover rounded-3xl shadow-2xl"
-              />
-            </motion.div>
+            </main>
           </div>
+        </div>
+        <div className="lg:absolute lg:inset-y-0 lg:h-full lg:w-1/2">
+          <Image
+            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full rounded-2xl"
+            src="/images/main/iPhone-16-E-Feature-1.jpg"
+            alt="iPhone 16 Pro"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority
+          />
         </div>
       </div>
 
@@ -384,6 +372,7 @@ const Home = () => {
                         src={category.image}
                         alt={category.name}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -398,75 +387,56 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Featured Products Grid */}
-      {products.length > 0 && (
-        <div className="bg-gray-50 py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-3">
-                محصولات ویژه
-              </h2>
-              <p className="text-lg text-gray-600">
-                پرفروش‌ترین و محبوب‌ترین گوشی‌های موبایل
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {products
-                .filter((p) => p.isFeatured)
-                .map((product) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Link to={`/products/${product.id}`} className="group block h-full">
-                      <div className="relative overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-lg h-full">
-                        <div className="aspect-w-16 aspect-h-9">
-                          <Image
-                            src={product.images[0]}
-                            alt={product.name}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
-                        </div>
-                        <div className="p-6 flex flex-col h-[calc(100%-16rem)]">
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">
-                              {product.name}
-                            </h3>
-                            <span className="text-sm text-gray-500">{product.brand}</span>
-                          </div>
-                          <div className="mt-auto pt-4 flex items-center justify-between">
-                            <span className="text-lg font-bold text-primary-600">
-                              {product.price.toLocaleString()} تومان
-                            </span>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-500 ml-2">
-                                {product.rating} ({product.numReviews})
-                              </span>
-                              <svg
-                                className="h-5 w-5 text-yellow-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </div>
-                          </div>
+      {/* Featured Products Section */}
+      <div className="bg-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-2">
+              محصولات ویژه
+            </h2>
+            <p className="text-lg text-gray-600">
+              جدیدترین و محبوب‌ترین محصولات ما را ببینید
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {sampleProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Link to={`/products/${product.id}`} className="group block h-full">
+                  <div className="relative overflow-hidden rounded-lg bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 h-full">
+                    <div className="aspect-w-1 aspect-h-1">
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>
+                      <p className="mt-1 text-sm text-gray-500">{product.brand}</p>
+                      <div className="mt-2 flex items-center justify-between">
+                        <p className="text-lg font-medium text-gray-900">
+                          {product.price.toLocaleString()} تومان
+                        </p>
+                        <div className="flex items-center">
+                          <span className="text-yellow-400">★</span>
+                          <span className="ml-1 text-sm text-gray-500">{product.rating}</span>
                         </div>
                       </div>
-                    </Link>
-                  </motion.div>
-                ))}
-            </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
-      )}
+      </div>
 
       {/* CTA Section */}
       <div className="bg-primary-600">
