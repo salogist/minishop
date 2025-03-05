@@ -96,7 +96,6 @@ npm run dev
 mobile-store/
 ├── client/                 # فرانت‌اند React
 │   ├── public/            # فایل‌های استاتیک
-│   ├── src/
 │   │   ├── components/   # کامپوننت‌های React
 │   │   ├── pages/       # صفحات اصلی
 │   │   ├── store/       # Redux store
@@ -186,10 +185,4 @@ npm run build
 
 ## لایسنس
 
-این پروژه تحت لایسنس MIT منتشر شده است. برای اطلاعات بیشتر به فایل [LICENSE](LICENSE) مراجعه کنید.
-
-## تماس با من
-
-- ایمیل: your.email@example.com
-- وبسایت: [your-website.com](https://your-website.com)
-- لینکدین: [your-linkedin](https://linkedin.com/in/your-profile) 
+این پروژه تحت لایسنس MIT منتشر شده است. برای اطلاعات بیشتر به فایل [LICENSE](LICENSE) مراجعه کنید. 
