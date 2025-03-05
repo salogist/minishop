@@ -5,6 +5,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { RootState } from '../store';
 import { clearUser } from '../store/slices/authSlice';
+import Image from './Image';
 
 const navigation = [
   { name: 'صفحه اصلی', href: '/' },
@@ -59,10 +60,11 @@ const Header = () => {
                 <Menu as="div" className="relative mr-3">
                   <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                     <span className="sr-only">باز کردن منوی کاربر</span>
-                    <img
+                    <Image
                       className="h-8 w-8 rounded-full"
-                        src={user.avatar || '/images/default-avatar.png'}
+                      src={user.avatar || '/images/default-avatar.png'}
                       alt={user.name}
+                      sizes="32px"
                     />
                   </Menu.Button>
                   <Transition
