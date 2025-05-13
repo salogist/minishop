@@ -8,6 +8,51 @@ import PageTransition from '../components/PageTransition';
 import AnimatedSection from '../components/AnimatedSection';
 import Image from '../components/Image';
 
+const sampleProducts: Product[] = [
+  {
+    id: '1',
+    name: 'iPhone 13 Pro',
+    brand: 'apple',
+    price: 45000000,
+    description: 'گوشی هوشمند اپل با دوربین حرفه‌ای و پردازنده قدرتمند',
+    images: ['/images/products/iphone-13-pro.jpg'],
+    specifications: {
+      screen: '6.1 inch',
+      processor: 'A15 Bionic',
+      ram: '6GB',
+      storage: '128GB',
+      camera: '12MP Triple Camera',
+      battery: '3095mAh'
+    },
+    inStock: true,
+    rating: 4.8,
+    numReviews: 120,
+    stock: 10,
+    colors: ['graphite', 'gold', 'silver', 'sierra-blue']
+  },
+  {
+    id: '2',
+    name: 'Samsung Galaxy S21',
+    brand: 'samsung',
+    price: 35000000,
+    description: 'گوشی هوشمند سامسونگ با طراحی مدرن و دوربین پیشرفته',
+    images: ['/images/products/galaxy-s21.jpg'],
+    specifications: {
+      screen: '6.2 inch',
+      processor: 'Exynos 2100',
+      ram: '8GB',
+      storage: '128GB',
+      camera: '12MP Triple Camera',
+      battery: '4000mAh'
+    },
+    inStock: true,
+    rating: 4.6,
+    numReviews: 85,
+    stock: 15,
+    colors: ['phantom-gray', 'phantom-white', 'phantom-violet']
+  }
+];
+
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
@@ -16,7 +61,7 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(setLoading(true));
     try {
-      // Simulate API call
+      // شبیه‌سازی API call
       setTimeout(() => {
         const foundProduct = sampleProducts.find(p => p.id === id);
         if (foundProduct) {
@@ -24,10 +69,10 @@ const ProductDetail = () => {
         } else {
           dispatch(setError('محصول مورد نظر یافت نشد'));
         }
-        dispatch(setLoading(false));
-      }, 1000);
+      }, 500);
     } catch (error) {
       dispatch(setError('خطا در بارگذاری اطلاعات محصول'));
+    } finally {
       dispatch(setLoading(false));
     }
   }, [dispatch, id]);
@@ -56,76 +101,81 @@ const ProductDetail = () => {
   return (
     <PageTransition>
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-            {/* Product gallery */}
-            <AnimatedSection delay={0.1}>
-              <div className="lg:max-w-lg lg:self-end">
-                <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="h-full w-full object-cover object-center"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Product Gallery */}
+          <AnimatedSection delay={0.1}>
+            <div className="bg-white rounded-lg p-4">
+              <div className="relative h-64 sm:h-80 md:h-96">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  className="w-full h-full object-contain"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={90}
+                />
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Product Info */}
+          <AnimatedSection delay={0.2}>
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-2">{product.name}</h1>
+                <p className="text-gray-600">{product.description}</p>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="flex items-center">
+                  <span className="text-yellow-400">★</span>
+                  <span className="mr-1">{product.rating}</span>
+                  <span className="text-gray-500">({product.numReviews} نظر)</span>
                 </div>
-                {product.images.length > 1 && (
-                  <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-4">
-                    {product.images.slice(1).map((image, index) => (
-                      <div key={index} className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
-                        <Image
-                          src={image}
-                          alt={`${product.name} - تصویر ${index + 2}`}
-                          className="h-full w-full object-cover object-center"
-                          sizes="(max-width: 768px) 25vw, 12vw"
-                        />
-                      </div>
+                <span className={`px-2 py-1 rounded text-sm ${product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  {product.inStock ? 'موجود' : 'ناموجود'}
+                </span>
+              </div>
+
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600">
+                {product.price.toLocaleString()} تومان
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold">مشخصات فنی</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  {Object.entries(product.specifications).map(([key, value]) => (
+                    <div key={key} className="bg-gray-50 p-3 rounded-lg">
+                      <span className="text-gray-600 block text-sm">{key}</span>
+                      <span className="font-medium">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {product.colors && (
+                <div className="space-y-2">
+                  <h2 className="text-xl font-semibold">رنگ‌های موجود</h2>
+                  <div className="flex gap-2">
+                    {product.colors.map((color) => (
+                      <div
+                        key={color}
+                        className="w-8 h-8 rounded-full border border-gray-200"
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      />
                     ))}
                   </div>
-                )}
-              </div>
-            </AnimatedSection>
-
-            {/* Product details */}
-            <AnimatedSection delay={0.2}>
-              <div className="mt-8 lg:mt-0 lg:mr-8">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">{product.name}</h1>
-                <div className="mt-3">
-                  <h2 className="sr-only">مشخصات محصول</h2>
-                  <p className="text-2xl sm:text-3xl tracking-tight text-gray-900">{product.price.toLocaleString()} تومان</p>
                 </div>
+              )}
 
-                <div className="mt-6">
-                  <h3 className="sr-only">توضیحات</h3>
-                  <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-gray-700">{product.description}</div>
-                </div>
-
-                <div className="mt-8 flex">
-                  <button
-                    type="button"
-                    className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-primary-600 px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
-                  >
-                    افزودن به سبد خرید
-                  </button>
-                </div>
-
-                <div className="mt-8 sm:mt-10">
-                  <h3 className="text-sm sm:text-base font-medium text-gray-900">مشخصات فنی</h3>
-                  <div className="mt-4">
-                    <ul role="list" className="list-disc space-y-2 pl-4 text-sm sm:text-base">
-                      {Object.entries(product.specifications).map(([key, value]) => (
-                        <li key={key} className="text-gray-400">
-                          <span className="text-gray-600">{key}:</span>{' '}
-                          {typeof value === 'object' ? JSON.stringify(value) : value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
+              <button
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                disabled={!product.inStock}
+              >
+                {product.inStock ? 'افزودن به سبد خرید' : 'ناموجود'}
+              </button>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </PageTransition>

@@ -8,11 +8,14 @@ export interface Product {
   specifications: {
     [key: string]: string;
   };
-  category: string;
+  category?: string;
   inStock: boolean;
-  isFeatured: boolean;
+  isFeatured?: boolean;
   rating: number;
-  reviews: number;
-  createdAt: string;
-  updatedAt: string;
+  numReviews: number;
+  reviews?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  stock?: number;
+  colors?: string[];
 } 

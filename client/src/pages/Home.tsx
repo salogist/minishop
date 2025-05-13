@@ -368,7 +368,7 @@ const Home = () => {
                     quality={80}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <h3 className="text-lg sm:text-xl font-bold p-3 sm:p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold p-3 sm:p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-white">
                       {category.name}
                     </h3>
                   </div>
