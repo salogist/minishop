@@ -8,6 +8,49 @@ import AnimatedSection from '../components/AnimatedSection';
 import Image from '../components/Image';
 import { Link } from 'react-router-dom';
 
+const sampleProducts: Product[] = [
+  {
+    id: '1',
+    name: 'iPhone 13 Pro',
+    brand: 'apple',
+    price: 45000000,
+    description: 'گوشی هوشمند اپل با دوربین حرفه‌ای و پردازنده قدرتمند',
+    images: ['/images/products/iphone-13-pro.jpg'],
+    specifications: {
+      screen: '6.1 inch',
+      processor: 'A15 Bionic',
+      ram: '6GB',
+      storage: '128GB',
+      camera: '12MP Triple Camera',
+      battery: '3095mAh'
+    },
+    inStock: true,
+    rating: 4.8,
+    stock: 10,
+    colors: ['graphite', 'gold', 'silver', 'sierra-blue']
+  },
+  {
+    id: '2',
+    name: 'Samsung Galaxy S21',
+    brand: 'samsung',
+    price: 35000000,
+    description: 'گوشی هوشمند سامسونگ با طراحی مدرن و دوربین پیشرفته',
+    images: ['/images/products/galaxy-s21.jpg'],
+    specifications: {
+      screen: '6.2 inch',
+      processor: 'Exynos 2100',
+      ram: '8GB',
+      storage: '128GB',
+      camera: '12MP Triple Camera',
+      battery: '4000mAh'
+    },
+    inStock: true,
+    rating: 4.6,
+    stock: 15,
+    colors: ['phantom-gray', 'phantom-white', 'phantom-violet']
+  }
+];
+
 const Products = () => {
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state: RootState) => state.product);
@@ -118,7 +161,7 @@ const Products = () => {
                       {product.price.toLocaleString()} تومان
                     </span>
                     <span className="text-xs sm:text-sm text-gray-500">
-                      {product.stock > 0 ? 'موجود' : 'ناموجود'}
+                      {product.inStock ? 'موجود' : 'ناموجود'}
                     </span>
                   </div>
                 </div>
@@ -126,17 +169,9 @@ const Products = () => {
             </AnimatedSection>
           ))}
         </div>
-
-        {filteredProducts.length === 0 && (
-          <AnimatedSection delay={0.4}>
-            <div className="text-center py-12">
-              <p className="text-gray-600">محصولی یافت نشد</p>
-            </div>
-          </AnimatedSection>
-        )}
       </div>
     </PageTransition>
   );
 };
 
-export default Products; 
+export default Products;
