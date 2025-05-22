@@ -15,7 +15,7 @@ const sampleProducts: Product[] = [
     brand: 'apple',
     price: 45000000,
     description: 'گوشی هوشمند اپل با دوربین حرفه‌ای و پردازنده قدرتمند',
-    images: ['/images/products/iphone-13-pro.jpg'],
+    images: ['/images/products/iphone-16-pro-finish-select-202409-6-3inch_GEO_EMEA_FMT_WHH.jpeg'],
     specifications: {
       screen: '6.1 inch',
       processor: 'A15 Bionic',
@@ -24,10 +24,13 @@ const sampleProducts: Product[] = [
       camera: '12MP Triple Camera',
       battery: '3095mAh'
     },
-    inStock: true,
     rating: 4.8,
+    numReviews: 120,
     stock: 10,
-    colors: ['graphite', 'gold', 'silver', 'sierra-blue']
+    colors: ['graphite', 'gold', 'silver', 'sierra-blue'],
+    createdAt: '',
+    updatedAt: '',
+    inStock: true
   },
   {
     id: '2',
@@ -35,7 +38,7 @@ const sampleProducts: Product[] = [
     brand: 'samsung',
     price: 35000000,
     description: 'گوشی هوشمند سامسونگ با طراحی مدرن و دوربین پیشرفته',
-    images: ['/images/products/galaxy-s21.jpg'],
+    images: ['/images/products/Samsung-Galaxy-S25-Ultra-colors-1024x650.jpg'],
     specifications: {
       screen: '6.2 inch',
       processor: 'Exynos 2100',
@@ -44,11 +47,38 @@ const sampleProducts: Product[] = [
       camera: '12MP Triple Camera',
       battery: '4000mAh'
     },
-    inStock: true,
     rating: 4.6,
+    numReviews: 85,
     stock: 15,
-    colors: ['phantom-gray', 'phantom-white', 'phantom-violet']
+    colors: ['phantom-gray', 'phantom-white', 'phantom-violet'],
+    createdAt: '',
+    updatedAt: '',
+    inStock: true
+  },
+  {
+    id: '3',
+    name: 'Xiaomi Mi 11',
+    brand: 'xiaomi',
+    price: 25000000,
+    description: 'گوشی شیائومی با دوربین قوی و باتری پرقدرت',
+    images: ['/images/products/mi-11.jpg'],
+    specifications: {
+      screen: '6.81 inch',
+      processor: 'Snapdragon 888',
+      ram: '8GB',
+      storage: '128GB',
+      camera: '108MP Triple Camera',
+      battery: '4600mAh'
+    },
+    rating: 4.5,
+    numReviews: 60,
+    stock: 20,
+    colors: ['black', 'white', 'blue'],
+    createdAt: '',
+    updatedAt: '',
+    inStock: true,
   }
+
 ];
 
 const Products = () => {
@@ -72,8 +102,8 @@ const Products = () => {
     }
   }, [dispatch]);
 
-  const filteredProducts = selectedBrand
-    ? products.filter(product => product.brand === selectedBrand)
+  const filteredProducts: Product[] = selectedBrand
+    ? products.filter((product: Product) => product.brand === selectedBrand)
     : products;
 
   if (loading) {

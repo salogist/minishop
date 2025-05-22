@@ -15,7 +15,7 @@ const sampleProducts: Product[] = [
     brand: 'apple',
     price: 45000000,
     description: 'گوشی هوشمند اپل با دوربین حرفه‌ای و پردازنده قدرتمند',
-    images: ['/images/products/iphone-13-pro.jpg'],
+    images: ['/images/products/iphone-16-pro-finish-select-202409-6-3inch_GEO_EMEA_FMT_WHH.jpeg'],
     specifications: {
       screen: '6.1 inch',
       processor: 'A15 Bionic',
@@ -36,7 +36,7 @@ const sampleProducts: Product[] = [
     brand: 'samsung',
     price: 35000000,
     description: 'گوشی هوشمند سامسونگ با طراحی مدرن و دوربین پیشرفته',
-    images: ['/images/products/galaxy-s21.jpg'],
+    images: ['/images/products/Samsung-Galaxy-S25-Ultra-colors-1024x650.jpg'],
     specifications: {
       screen: '6.2 inch',
       processor: 'Exynos 2100',
@@ -49,7 +49,7 @@ const sampleProducts: Product[] = [
     rating: 4.6,
     numReviews: 85,
     stock: 15,
-    colors: ['phantom-gray', 'phantom-white', 'phantom-violet']
+    colors: ['graphite', 'gold', 'silver', 'sierra-blue']
   }
 ];
 

@@ -1,48 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  description: string;
-  price: number;
-  images: string[];
-  specifications: {
-    screen: {
-      size: string;
-      resolution: string;
-      technology: string;
-    };
-    camera: {
-      main: string;
-      selfie: string;
-      features: string[];
-    };
-    battery: {
-      capacity: string;
-      type: string;
-      features: string[];
-    };
-    storage: {
-      ram: string;
-      internal: string;
-      card: string;
-    };
-    processor: {
-      chipset: string;
-      cpu: string;
-      gpu: string;
-    };
-  };
-  stock: number;
-  colors: Array<{
-    name: string;
-    code: string;
-  }>;
-  rating: number;
-  numReviews: number;
-  createdAt: string;
-}
+import { Product } from '../../types/product';
 
 interface ProductState {
   products: Product[];
@@ -51,7 +8,7 @@ interface ProductState {
   error: string | null;
   page: number;
   pages: number;
-  totalProducts: number;
+  total: number;
 }
 
 const initialState: ProductState = {
@@ -61,7 +18,7 @@ const initialState: ProductState = {
   error: null,
   page: 1,
   pages: 1,
-  totalProducts: 0,
+  total: 0,
 };
 
 const productSlice = createSlice({
@@ -80,7 +37,7 @@ const productSlice = createSlice({
       state.products = action.payload.products;
       state.page = action.payload.page;
       state.pages = action.payload.pages;
-      state.totalProducts = action.payload.totalProducts;
+      state.total = action.payload.totalProducts;
     },
     setProduct: (state, action: PayloadAction<Product>) => {
       state.product = action.payload;
